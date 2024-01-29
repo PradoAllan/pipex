@@ -6,12 +6,40 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:52:24 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/25 21:25:51 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/29 17:18:29 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 //ONLY MANDATORY PART...
+void	new_cmds(char **cmds)
+{
+	int		x;
+	int		j;
+	int		quotes;
+	char	*temp;
+
+	x = 0;
+	while (cmds[x])
+	{
+		j = 0;
+		quotes = 0;
+		while (cmds[x][j])
+		{
+			if (cmds[x][j] == 39)
+				quotes++;
+			j++;
+		}
+		if (quotes >= 2)
+		{
+			temp = cmds[x];
+			cmds[x] = ft_strtrim(cmds[x], "'");
+			free(temp);
+		}
+		x++;
+	}
+}
+
 void	mandatory_p1(int pfd[], char **args, char **paths)
 {
 	int		new_fdin;
@@ -20,10 +48,8 @@ void	mandatory_p1(int pfd[], char **args, char **paths)
 	new_fdin = open(args[1], O_RDONLY);
 	cmds = ft_split_cmds(args[2], ' ');
 	if (!cmds)
-	{
-		ft_putstr("Comand invalid.", 2);
-		return ;
-	}
+		return (ft_putstr("Comand invalid", 2));
+	new_cmds(cmds);
 	if (new_fdin < 0)
 		ft_puterror("Error.");
 	if (dup2(pfd[WRITE_END], STDOUT_FILENO) == -1)
@@ -47,10 +73,8 @@ void	mandatory_p2(int pfd[], char **args, char **paths)
 	new_fdout = open(args[4], O_CREAT | O_RDWR | O_TRUNC, 00700);
 	cmds = ft_split_cmds(args[3], ' ');
 	if (!cmds)
-	{
-		ft_putstr("Comand invalid.", 2);
-		return ;
-	}
+		return (ft_putstr("Comand invalid.", 2));
+	new_cmds(cmds);
 	if (new_fdout < 0)
 		ft_puterror("Error.");
 	if (dup2(pfd[READ_END], STDIN_FILENO) == -1)
@@ -91,57 +115,6 @@ void	mandatory(char **true_paths, char **args, int ac)
 	waitpid(pid2, NULL, 0);
 }
 
-/*
-//only here_doc bonus...
-int	is_here_doc(char *here_doc)
-{
-	int	i;
-	char	*str;
-
-	i = 0;
-	str = "here_doc";
-	while (here_doc[i] != '\0')
-	{
-		if (here_doc[i] == str[i])
-			i++;
-		else
-			break ;
-	}
-	if (here_doc[i] == '\0')
-		return (1);
-	return (0);
-}
-
-//ONLY HERE_DOC BONUS...
-void	here_doc_bonus(char **av, int qtd_lines)
-{
-//	char	**args;
-	int	i;
-
-//	args = av_dealer(av, qtd_lines);
-	(void)qtd_lines;
-	i = 1;
-	ft_putstr("HERE_DOC INPUT: ", 1);
-	while (av[i])
-		ft_putstr(av[i++], 1);
-}
-
-//ONLY BONUS MULTIPLE COMANDS...
-void	bonus_func(char **true_paths, char **args, int ac)
-{
-//	char	**args;
-	int	i;
-
-//	args = av_dealer(av, ac);
-	(void)ac;
-	(void)args;
-	i = 0;
-	ft_putstr("MULTIPLE COMANDS INPUT: ", 1);
-	while (true_paths[i])
-		ft_putstr(true_paths[i++], 1);
-}
-*/
-
 void	pipex(char **args, int ac, char **paths, int type)
 {
 	char	**true_paths;
@@ -172,55 +145,23 @@ void	pipex(char **args, int ac, char **paths, int type)
 	Second bonus: ./pipex here_doc cmd cmd output_file
 */
 
-/*
-//Testing func
-char	**join_split(char **av, int ac)
-{
-	int	i;
-	char	**temp;
-	char	**newav;
-
-
-	i = 0;
-	while (i < ac)
-	{
-		if (i == 0)
-		{
-			newav = ft_strjoin(av[0], av[1]);
-			i = 1;
-		}
-		else
-		{
-			temp = newav;
-			newav = ft_strjoin((char *)temp, av[i]);
-			free(temp);
-		}
-		i++;
-	}
-}
-*/
-
 int	main(int ac, char **av, char **envp)
 {
 	char	*env_path;
 	char	**paths;
 
-	if (!av_checker(av, ac))
-	{
-		ft_putstr("Invalid arguments.", 2);
-		return (0);
-	}
+	if (ac != 5 || !av_checker(av, ac))
+		return (ft_putstr("Invalid arguments.", 2), 0);
 	if (!comand_checker(av[2]) || !comand_checker(av[3]))
-	{
-		ft_putstr("Invalid comands.", 2);
-		return (0);
-	}
+		return (ft_putstr("Invalid comands.", 2), 0);
 	env_path = env_path_finder(envp);
+	if (!env_path)
+		return (0);
 	paths = ft_split(env_path + 5, ':');
+	if (!paths)
+		return (0);
 	if (ac == 5)
 		pipex(av, ac, paths, 1);
-	else if (ac > 5)
-		pipex(av, ac, paths, 2);
 	else
 		ft_putstr("Invalid arguments.", 2);
 	return (1);

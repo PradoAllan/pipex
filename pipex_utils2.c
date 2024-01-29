@@ -6,7 +6,7 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:15:27 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/25 14:25:30 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/29 16:55:24 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,34 +83,13 @@ char	*ft_substr_cmds(char const *s, unsigned int start, size_t len)
 	return (new);
 }
 
-/*
-int	is_there_two_quotes(char *s)
+int	is_there_quotes(unsigned int index, char const *s)
 {
-	int	i;
-	int	len;
-
-	len = ft_strlen((char *)s);
-	while (s[i])
+	while (s[index])
 	{
-		if (s[i] == 34)
-		{
-			while (len != 0)
-				if (s[len--] == 34 && len > i)
-					return (1);
-		}
-		i++;
-	}
-	i = 0;
-	len = ft_strlen((char *)s);
-	while (s[i])
-	{
-		if (s[i] == 39)
-		{
-			while (len != 0)
-				if (s[len--] == 39 && len > 1)
-					return (1);
-		}
-		i++;
+		if (s[index] == 39)
+			return (index);
+		index++;
 	}
 	return (0);
-}*/
+}
