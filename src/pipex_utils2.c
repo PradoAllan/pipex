@@ -6,7 +6,7 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 10:15:27 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/29 16:55:24 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:40:28 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 
 void	freematrix(char **matrix, int i )
 {
-	int	x;
-
-	x = 0;
-	if (i == 0)
-	{
-		while (matrix[x])
-		{
-			free(matrix[x]);
-			x++;
-		}
-		free(matrix);
-		return ;
-	}
 	i--;
 	while (i >= 0)
 	{

@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve.c                                           :+:      :+:    :+:   */
+/*   pipex_comand_checker.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 12:37:42 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/10 14:06:14 by aprado           ###   ########.fr       */
+/*   Created: 2024/01/24 13:07:13 by aprado            #+#    #+#             */
+/*   Updated: 2024/01/29 18:16:08 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "pipex.h"
 
-/*
-int	main(void)
+static int	is_quote(char *s)
 {
-	char	*path = "pipex";
-	char	*arguments[] = {"Allan", "prado", "da", "silva", "42", "RIO", NULL};
-	execve(path, arguments, NULL);
-	printf("ERROR!");
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == 39)
+			quote++;
+		i++;
+	}
+	if (quote % 2 == 0)
+		return (1);
 	return (0);
 }
-*/
 
-int	main(int ac, char **av)
+int	comand_checker(char *s)
 {
-	(void)ac;
-	execve("pipex", av, NULL);
-	printf("ERROR 2");
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(s);
+	if (!s)
+		return (0);
+	while (s[i] > 8 && s[i] < 14)
+		i++;
+	if (len == i)
+		return (0);
+	if (is_quote(s))
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:17:41 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/29 17:20:42 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/29 18:12:31 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,50 +24,6 @@ static size_t	wordslen(char const *s, char c, unsigned int i)
 	}
 	return (len);
 }
-
-/*
-//por na utils
-void	change_space(char *s, unsigned int index)
-{
-	while (s[index])
-	{
-		if (s[index] == ' ')
-			s[index] = '\t';
-		index++;
-	}
-}
-//por na utils
-void	change_tab(char **matrix, unsigned int words)
-{
-	unsigned int	x;
-	unsigned int	j;
-
-	x = 0;
-	while (x < words && matrix[x])
-	{
-		j = 0;
-		while (matrix[x][j])
-		{
-			if (matrix[x][j] == '\t')
-				matrix[x][j] = ' ';
-			j++;
-		}
-		x++;
-	}
-}
-
-//por na utils
-int	is_there_quotes(unsigned int index, char const *s)
-{
-	while (s[index])
-	{
-		if (s[index] == 39)
-			return (index);
-		index++;
-	}
-	return (0);
-}
-*/
 
 static unsigned int	count_words(char const *s, char c, unsigned int i)
 {
@@ -88,46 +44,6 @@ static unsigned int	count_words(char const *s, char c, unsigned int i)
 	}
 	return (words);
 }
-/*
-static unsigned int	count_words(char const *s, char c, unsigned int i)
-{
-	unsigned int	words;
-	unsigned int	quote;
-	
-	unsigned int	j;
-	unsigned int	k;
-
-	words = 1;
-	j = i;
-	k = ft_strlen((char *)s);
-	if (i == k)
-		words++;
-	while (s[j] && s[j] != 34)
-		j++;
-	while (k != 0 && s[k] != 34)
-		k--;
-	if (s[j] != s[k])
-		return (0);
-	
-
-	words = 0;
-	quote = 0;
-	while (s[i])
-	{
-		if (s[i] == 39 || s[i] == 34)
-		{
-			quote++;
-			if (quote == 0)
-				words++;
-		}
-		if (quote == 0 && (s[i] != 39 && s[i] != 34))
-			if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
-				words++;
-		i++;
-	}
-	return (words);
-}
-*/
 
 static void	freeall(char **matrix, unsigned int i)
 {

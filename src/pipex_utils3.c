@@ -6,7 +6,7 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 14:33:03 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/29 17:15:38 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/29 18:31:20 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,30 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (ft_substr_cmds(s1, first, last - first));
 }
 
-/*
-char	*ft_substr_cmds(char const *s, unsigned int start, size_t len)
+void	new_cmds(char **cmds)
 {
-	char	*new;
-	int		i;
+	int		x;
 	int		j;
+	int		quotes;
+	char	*temp;
 
-	if (!(s))
-		return (NULL);
-	i = 0;
-	j = (int)start;
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	new = (char *)malloc((len + 1) * sizeof(char));
-	if (new == NULL)
-		return (NULL);
-	while (len > 0)
+	x = 0;
+	while (cmds[x])
 	{
-		new[i] = s[j];
-		i++;
-		j++;
-		len--;
+		j = 0;
+		quotes = 0;
+		while (cmds[x][j])
+		{
+			if (cmds[x][j] == 39)
+				quotes++;
+			j++;
+		}
+		if (quotes >= 2)
+		{
+			temp = cmds[x];
+			cmds[x] = ft_strtrim(cmds[x], "'");
+			free(temp);
+		}
+		x++;
 	}
-	new[i] = '\0';
-	return (new);
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: aprado <aprado@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:13:04 by aprado            #+#    #+#             */
-/*   Updated: 2024/01/29 17:16:26 by aprado           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:49:41 by aprado           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ char	*true_path_finder(char **args, int ac, char **paths);
 char	*ft_strtrim(char const *s1, char const *set);
 void	ft_putstr(char *s, int fd);
 void	freematrix(char **matrix, int i);
+void	freematrix_two(char **matrix);
 void	ft_puterror(char *s);
 void	change_tab(char **matrix, unsigned int words);
 void	change_space(char *s, unsigned int index);
+void	new_cmds(char **cmds);
 
 #endif
